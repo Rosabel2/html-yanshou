@@ -1,0 +1,3173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>财会监督 · 知识中心 · 数据采集（Axure/Figma 原型）</title>
+  <!--
+    离线原型：无外部 CDN 依赖，双击即可本地打开
+    Axure：整页导入 HTML 框架，或按 [data-axure] 拆分动态面板
+    Figma：用 html.to.design / Anima 导入；图层名对齐 data-figma
+    设计稿基准：1920×1080，主色 #1890FF，侧栏 #3d84e8
+    模块：知识中心 → 采集中心 → 数据采集
+  -->
+  <style>
+    :root {
+      --color-primary: #1890ff;
+      --color-primary-light: #40a9ff;
+      --color-sidebar: #3d84e8;
+      --color-sidebar-dark: #2f6fcc;
+      --color-sidebar-active: rgba(255, 255, 255, 0.22);
+      --color-page-bg: #eef3fb;
+      --color-card: #ffffff;
+      --color-border: #e8e8e8;
+      --color-text: #262626;
+      --color-text-secondary: #8c8c8c;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-pill: 999px;
+      --shadow-card: 0 2px 10px rgba(24, 80, 160, 0.08);
+      --shadow-header: 0 1px 0 rgba(0, 0, 0, 0.04);
+      --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      font-size: 14px;
+    }
+
+    body {
+      min-width: 1440px;
+      min-height: 100vh;
+      background: var(--color-page-bg);
+      color: var(--color-text);
+    }
+
+    svg { display: block; flex-shrink: 0; }
+
+    /* —— 顶栏 —— */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      padding: 0 20px 0 16px;
+      background: #fff;
+      box-shadow: var(--shadow-header);
+      position: relative;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-primary);
+      letter-spacing: 0.02em;
+      min-width: 180px;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1890ff, #69c0ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .main-menu-wrap {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .main-menu {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      padding: 4px;
+      background: #f5f7fa;
+      border-radius: var(--radius-pill);
+      border: 1px solid #eef1f6;
+    }
+
+    .main-menu a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 18px;
+      color: #595959;
+      text-decoration: none;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .main-menu a:hover { color: var(--color-primary); background: rgba(24, 144, 255, 0.06); }
+
+    .main-menu a.is-active {
+      color: #fff;
+      font-weight: 500;
+      background: linear-gradient(90deg, #1890ff, #40a9ff);
+      box-shadow: 0 2px 8px rgba(24, 144, 255, 0.35);
+    }
+
+    .main-menu .nav-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.85;
+    }
+
+    .main-menu a.is-active .nav-icon { opacity: 1; }
+
+    .top-tools {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      min-width: 320px;
+      justify-content: flex-end;
+    }
+
+    .top-tools .time {
+      font-variant-numeric: tabular-nums;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .top-tools .date { white-space: nowrap; }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      color: #8c8c8c;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover { background: #f5f5f5; color: var(--color-primary); }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--color-text);
+      font-size: 13px;
+    }
+
+    .user-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #69c0ff, #1890ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      overflow: hidden;
+    }
+
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* —— 主体布局 —— */
+    .app-shell {
+      display: flex;
+      min-height: calc(100vh - 56px);
+    }
+
+    /* —— 侧栏 —— */
+    .sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      background: var(--color-sidebar);
+      color: rgba(255, 255, 255, 0.92);
+      padding: 12px 0 24px;
+    }
+
+    .sidebar-item {
+      display: block;
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: left;
+      color: inherit;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+      font-size: 14px;
+      transition: background 0.15s;
+    }
+
+    .sidebar-link:hover { background: rgba(255, 255, 255, 0.08); }
+
+    .sidebar-link .menu-icon {
+      width: 18px;
+      height: 18px;
+      opacity: 0.9;
+    }
+
+    .sidebar-link .arrow {
+      margin-left: auto;
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
+      transition: transform 0.2s;
+    }
+
+    .sidebar-group.is-open .sidebar-link .arrow { transform: rotate(180deg); }
+
+    .sidebar-sub {
+      list-style: none;
+      display: none;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar-group.is-open .sidebar-sub { display: block; }
+
+    .sidebar-sub a {
+      display: block;
+      padding: 11px 16px 11px 44px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      position: relative;
+      transition: background 0.15s;
+    }
+
+    .sidebar-sub a:hover { background: rgba(255, 255, 255, 0.08); }
+
+    .sidebar-sub a.is-active {
+      background: var(--color-sidebar-active);
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .sidebar-sub a.is-active::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 18px;
+      background: #fff;
+      border-radius: 2px 0 0 2px;
+    }
+
+    /* —— 主内容 —— */
+    .main-area {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #f3f7fd 0%, var(--color-page-bg) 100%);
+    }
+
+    /* —— 二级 Tab —— */
+    .sub-tabs {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.65);
+      border-bottom: 1px solid #e3eaf5;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .sub-tabs .tab {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+    }
+
+    .sub-tabs .tab:hover { color: var(--color-primary); }
+
+    .sub-tabs .tab.is-active {
+      color: var(--color-primary);
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(24, 144, 255, 0.12);
+      font-weight: 500;
+    }
+
+    .sub-tabs .tab.is-active::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .tab-close {
+      opacity: 0.45;
+      font-size: 14px;
+      line-height: 1;
+      margin-left: 2px;
+    }
+
+    .sub-tabs .more {
+      margin-left: auto;
+      flex-shrink: 0;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      border: 1px solid #d9e6f7;
+      border-radius: var(--radius-sm);
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* —— 筛选栏 —— */
+    .filter-bar {
+      margin: 16px 20px 0;
+      padding: 16px 20px;
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-bar label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--color-text);
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .filter-bar input {
+      flex: 1;
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--color-text);
+      min-width: 200px;
+    }
+
+    .filter-bar input::placeholder { color: #bfbfbf; }
+
+    .filter-bar input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 18px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .btn-default {
+      background: #fff;
+      border-color: var(--color-border);
+      color: var(--color-text);
+    }
+
+    .btn-default:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+    .btn-primary {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--color-primary-light); border-color: var(--color-primary-light); }
+
+    /* —— 单位卡片网格 —— */
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 16px 20px 24px;
+    }
+
+    .unit-card {
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-card);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .unit-card:hover {
+      border-color: #91d5ff;
+      box-shadow: 0 4px 16px rgba(24, 144, 255, 0.1);
+    }
+
+    .unit-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .unit-card-head h3 {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--color-text);
+    }
+
+    .size-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      padding: 3px 10px;
+      font-size: 12px;
+      color: var(--color-primary);
+      background: #e6f7ff;
+      border: 1px solid #91d5ff;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .unit-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .unit-meta-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: #595959;
+      line-height: 1.5;
+    }
+
+    .unit-meta-row .meta-icon {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      color: var(--color-primary);
+    }
+
+    .unit-meta-row .meta-text {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .contact-box {
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-box.blue { background: #e8f4ff; }
+    .contact-box.yellow { background: #fff8e6; }
+    .contact-box.green { background: #edf9f0; }
+
+    .contact-name {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .contact-name .role-icon {
+      width: 18px;
+      height: 18px;
+      opacity: 0.65;
+    }
+
+    .contact-phone {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .unit-card { cursor: pointer; }
+
+    /* —— 视图切换 —— */
+    .page-view { display: none; flex: 1; flex-direction: column; min-height: 0; }
+    .page-view.is-active { display: flex; }
+
+    /* —— 单位详情 / 场景页 —— */
+    .detail-header {
+      margin: 16px 20px 0;
+      padding: 16px 20px;
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .detail-header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .btn-back:hover { color: var(--color-primary); border-color: #91d5ff; }
+
+    .detail-title h2 {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .detail-title p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+
+    .detail-header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+    .scene-count {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    .scene-count strong { color: var(--color-primary); font-weight: 600; }
+
+    .btn-add-scene {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 16px;
+      border: 1px dashed #91d5ff;
+      border-radius: var(--radius-sm);
+      background: #e6f7ff;
+      color: var(--color-primary);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-add-scene:hover { background: #bae7ff; border-style: solid; }
+
+    /* —— 场景卡片网格 —— */
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 16px 20px 24px;
+    }
+
+    .scene-card {
+      position: relative;
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .scene-card:hover {
+      border-color: #91d5ff;
+      box-shadow: 0 4px 16px rgba(24, 144, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .scene-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .scene-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--color-text);
+    }
+
+    .scene-card .scene-desc {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .scene-voucher-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--color-primary);
+      background: #f0f8ff;
+      border: 1px solid #d6ebff;
+      border-radius: var(--radius-sm);
+    }
+
+    .scene-voucher-count strong {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .scene-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .scene-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .scene-card:hover .scene-actions {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .scene-actions button {
+      height: 28px;
+      padding: 0 12px;
+      font-size: 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: inherit;
+      border: 1px solid var(--color-border);
+      background: #fff;
+      color: var(--color-text);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .scene-actions .btn-view {
+      color: var(--color-primary);
+      border-color: #91d5ff;
+      background: #f0f8ff;
+    }
+
+    .scene-actions .btn-view:hover { background: #e6f7ff; }
+
+    .scene-actions .btn-edit:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .scene-actions .btn-delete {
+      color: #ff4d4f;
+      border-color: #ffccc7;
+      background: #fff1f0;
+    }
+
+    .scene-actions .btn-delete:hover {
+      background: #ff4d4f;
+      border-color: #ff4d4f;
+      color: #fff;
+    }
+
+    .scene-empty {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      background: var(--color-card);
+      border: 1px dashed #d9e6f7;
+      border-radius: var(--radius-lg);
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      gap: 12px;
+    }
+
+    .scene-empty svg { opacity: 0.4; }
+
+    /* —— 记账凭证采集页 —— */
+    .voucher-filter {
+      margin: 16px 20px 0;
+      padding: 16px 20px;
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .voucher-filter .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 160px;
+      flex: 1;
+    }
+
+    .voucher-filter .field label {
+      font-size: 13px;
+      color: var(--color-text);
+    }
+
+    .voucher-filter .field input {
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .voucher-filter .field input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .voucher-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px 0;
+      gap: 12px;
+    }
+
+    .btn-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 18px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-upload:hover { background: var(--color-primary-light); }
+
+    .btn-back-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 36px;
+      padding: 0 18px;
+      border: 1px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--color-primary);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-back-primary:hover { background: #e6f7ff; }
+
+    .voucher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 8px;
+      column-gap: 12px;
+      padding: 12px 20px;
+      flex: 1;
+      align-items: start;
+      align-content: start;
+    }
+
+    .voucher-card {
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+      height: fit-content;
+    }
+
+    .voucher-card:hover {
+      border-color: #91d5ff;
+      box-shadow: 0 4px 16px rgba(24, 144, 255, 0.1);
+    }
+
+    .voucher-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 12px;
+      background: linear-gradient(90deg, #1890ff, #40a9ff);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .voucher-card-head .status {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.92;
+      white-space: nowrap;
+    }
+
+    .voucher-card-body {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .voucher-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      line-height: 1.35;
+      min-height: 0;
+    }
+
+    .voucher-row .lbl {
+      flex-shrink: 0;
+      width: 56px;
+      color: var(--color-primary);
+    }
+
+    .voucher-row .val {
+      flex: 1;
+      color: var(--color-text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .voucher-row .val.empty { color: var(--color-text-secondary); }
+
+    .voucher-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 8px 20px 20px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    .voucher-pagination .total strong { color: var(--color-text); font-weight: 600; }
+
+    .page-btn {
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--color-text);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .page-btn.is-active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .page-goto {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-goto input {
+      width: 40px;
+      height: 32px;
+      text-align: center;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .voucher-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      background: var(--color-card);
+      border: 1px dashed #d9e6f7;
+      border-radius: var(--radius-lg);
+    }
+
+    .app-shell.is-audit-mode .sidebar { display: none; }
+    .app-shell.is-audit-mode .main-area { width: 100%; }
+
+    /* —— 查账中心 · 开始查账 —— */
+    .task-header {
+      margin: 16px 20px 0;
+      padding: 16px 20px;
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .task-meta h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 8px 0 4px;
+    }
+
+    .task-meta p { font-size: 13px; color: var(--color-text-secondary); }
+
+    .task-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: var(--color-primary);
+      background: #e6f7ff;
+      border: 1px solid #91d5ff;
+      border-radius: var(--radius-sm);
+    }
+
+    .progress-track {
+      flex: 1;
+      min-width: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding-top: 8px;
+    }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+      max-width: 160px;
+    }
+
+    .progress-step::after {
+      content: "";
+      position: absolute;
+      top: 11px;
+      left: calc(50% + 14px);
+      width: calc(100% - 28px);
+      height: 3px;
+      background: #d9d9d9;
+      z-index: 0;
+    }
+
+    .progress-step:last-child::after { display: none; }
+    .progress-step.is-done::after { background: var(--color-primary); }
+    .progress-step.is-done:has(+ .progress-step.is-pending)::after { background: #d9d9d9; }
+
+    .progress-step.is-current .step-dot {
+      box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.2);
+    }
+
+    .step-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--color-primary);
+      z-index: 1;
+      position: relative;
+    }
+
+    .progress-step.is-pending .step-dot {
+      background: #fff;
+      box-shadow: 0 0 0 2px #d9d9d9;
+    }
+
+    .step-label {
+      margin-top: 8px;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.4;
+      color: var(--color-text-secondary);
+    }
+
+    .progress-step.is-done .step-label,
+    .progress-step.is-current .step-label {
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    .progress-step.is-pending .step-label { color: #bfbfbf; }
+
+    .material-panel {
+      margin: 16px 20px;
+      background: var(--color-card);
+      border: 1px solid #e8edf5;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .material-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .material-head h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .btn-edit-material {
+      height: 32px;
+      padding: 0 14px;
+      border: 1px solid #91d5ff;
+      border-radius: var(--radius-sm);
+      background: #e6f7ff;
+      color: var(--color-primary);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-edit-material:hover { background: #bae7ff; }
+
+    .material-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f5f5f5;
+      transition: background 0.15s;
+    }
+
+    .material-row:last-child { border-bottom: none; }
+    .material-row:hover { background: #fafcff; }
+
+    .material-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #fff7e6;
+      color: #fa8c16;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .material-info { flex: 1; min-width: 0; }
+
+    .material-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+
+    .material-sub {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .material-status {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    .material-status strong {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .material-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mat-icon-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: #ff4d4f;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mat-link-btn {
+      border: none;
+      background: none;
+      color: var(--color-primary);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .mat-link-btn:hover { text-decoration: underline; }
+
+    .mat-year-select {
+      height: 32px;
+      padding: 0 28px 0 10px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: inherit;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .mat-action-btn {
+      height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .mat-action-btn.primary {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: #f0f8ff;
+    }
+
+    .audit-footer {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    .float-assistant {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      background: linear-gradient(135deg, #69c0ff, #1890ff);
+      box-shadow: 0 4px 16px rgba(24, 144, 255, 0.4);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    /* —— 关联记账凭证抽屉 —— */
+    .drawer-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 110;
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .drawer-mask.is-open { display: flex; }
+
+    .drawer-panel {
+      width: min(960px, 94vw);
+      height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+      animation: drawerIn 0.25s ease;
+    }
+
+    @keyframes drawerIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      flex-shrink: 0;
+    }
+
+    .drawer-head h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .link-voucher-filter {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px;
+      background: #fafafa;
+      border: 1px solid #f0f0f0;
+      border-radius: var(--radius-md);
+    }
+
+    .link-voucher-filter .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 140px;
+      flex: 1;
+    }
+
+    .link-voucher-filter .field label {
+      font-size: 13px;
+      color: var(--color-text);
+    }
+
+    .link-voucher-filter .field input {
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .search-select {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-select-trigger {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      cursor: pointer;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .search-select-trigger:hover { border-color: #40a9ff; }
+
+    .search-select.is-open .search-select-trigger {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .search-select-value {
+      flex: 1;
+      font-size: 14px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--color-text);
+    }
+
+    .search-select-value.is-placeholder { color: #bfbfbf; }
+
+    .search-select-arrow {
+      flex-shrink: 0;
+      font-size: 16px;
+      line-height: 1;
+      color: #8c8c8c;
+      transition: transform 0.2s;
+    }
+
+    .search-select.is-open .search-select-arrow { transform: rotate(180deg); }
+
+    .search-select-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 120;
+      overflow: hidden;
+    }
+
+    .search-select.is-open .search-select-dropdown { display: block; }
+
+    .search-select-search {
+      width: 100%;
+      height: 36px;
+      padding: 0 12px;
+      border: none;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .search-select-search:focus { background: #fafcff; }
+
+    .search-select-list {
+      list-style: none;
+      max-height: 220px;
+      overflow-y: auto;
+      margin: 0;
+      padding: 4px 0;
+    }
+
+    .search-select-list li {
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--color-text);
+    }
+
+    .search-select-list li:hover,
+    .search-select-list li.is-active {
+      background: #e6f7ff;
+      color: var(--color-primary);
+    }
+
+    .search-select-list li.is-empty {
+      color: #bfbfbf;
+      cursor: default;
+      text-align: center;
+    }
+
+    .search-select-list li.is-empty:hover {
+      background: transparent;
+      color: #bfbfbf;
+    }
+
+    .link-voucher-table-wrap {
+      border: 1px solid #f0f0f0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .link-voucher-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .link-voucher-table th {
+      text-align: left;
+      padding: 12px 14px;
+      background: #e6f7ff;
+      color: var(--color-text);
+      font-weight: 500;
+      border-bottom: 1px solid #bae7ff;
+    }
+
+    .link-voucher-table th:first-child,
+    .link-voucher-table td:first-child {
+      width: 48px;
+      text-align: center;
+    }
+
+    .link-voucher-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f5f5f5;
+      color: var(--color-text);
+      vertical-align: middle;
+    }
+
+    .link-voucher-table tbody tr:hover { background: #fafcff; }
+
+    .link-voucher-table tbody tr:last-child td { border-bottom: none; }
+
+    .drawer-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 12px 0 0;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .drawer-pagination select {
+      height: 32px;
+      padding: 0 8px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .drawer-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 14px 20px;
+      border-top: 1px solid #f0f0f0;
+      background: #fafafa;
+      flex-shrink: 0;
+    }
+
+    /* —— 新增场景弹窗 —— */
+    .modal-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-mask.is-open { display: flex; }
+
+    .modal-box {
+      width: min(480px, 92vw);
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      animation: modalIn 0.2s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-head {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-head h3 { font-size: 15px; font-weight: 600; }
+
+    .modal-close {
+      border: none;
+      background: none;
+      font-size: 20px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .modal-body { padding: 20px; }
+
+    .form-field { margin-bottom: 16px; }
+
+    .form-field label {
+      display: block;
+      font-size: 13px;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .form-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .form-label-row span:first-child {
+      font-size: 13px;
+      color: var(--color-text);
+    }
+
+    .form-char-count {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .form-char-count.is-limit {
+      color: #ff4d4f;
+    }
+
+    .form-field select,
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .form-field select,
+    .form-field input { height: 36px; }
+
+    .form-field textarea {
+      min-height: 88px;
+      padding: 8px 12px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+
+    .form-field select:focus,
+    .form-field input:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .form-field:last-child { margin-bottom: 0; }
+
+    .modal-foot {
+      padding: 12px 20px 16px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .modal-box.confirm-sm { width: min(420px, 92vw); }
+
+    .confirm-body {
+      font-size: 14px;
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .confirm-body strong {
+      color: #ff4d4f;
+      font-weight: 600;
+    }
+
+    .btn-danger {
+      background: #ff4d4f;
+      border-color: #ff4d4f;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #ff7875;
+      border-color: #ff7875;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- data-figma / data-axure：导入时保留图层命名 -->
+  <header class="top-nav" data-figma="Frame/TopNav" data-axure="顶栏导航">
+    <div class="brand" data-figma="Logo">
+      <span class="brand-icon">财</span>
+      <span>财会监督</span>
+    </div>
+    <div class="main-menu-wrap">
+      <nav>
+        <ul class="main-menu" data-figma="TopNav/MainMenu">
+          <li>
+            <a href="#" data-nav="business" data-axure="业务中心">
+              <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+              业务中心
+            </a>
+          </li>
+          <li>
+            <a href="#" data-nav="audit" data-axure="查账中心">
+              <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M3 4h10M3 8h10M3 12h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              查账中心
+            </a>
+          </li>
+          <li>
+            <a href="#" class="is-active" data-nav="knowledge" data-axure="知识中心">
+              <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4.5A6.5 6.5 0 0114 4.5v7a1 1 0 01-1.2.98L8 11.5l-4.8 1.48A1 1 0 012 11.5v-7z" stroke="currentColor" stroke-width="1.2"/></svg>
+              知识中心
+            </a>
+          </li>
+          <li>
+            <a href="#" data-axure="配置中心">
+              <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              配置中心
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="top-tools" data-figma="TopNav/Utilities">
+      <span class="time" id="clock">15:50:44</span>
+      <span class="date" id="date">星期二 2024/06/30</span>
+      <button type="button" class="icon-btn" aria-label="通知" data-figma="Icon/Notification">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 00-5 5v3.5L3 13h12l-1-2.5V7a5 5 0 00-5-5z" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 13a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.2"/></svg>
+      </button>
+      <button type="button" class="icon-btn" aria-label="全屏" data-figma="Icon/Fullscreen">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 7V3h4M11 3h4v4M14 11v4h-4M7 14H3v-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="user-pill" data-figma="TopNav/User">
+        <span class="user-avatar">
+          <svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="15" fill="#69c0ff"/><circle cx="15" cy="12" r="5" fill="#fff"/><path d="M6 26c1.5-5 6-7 9-7s7.5 2 9 7" fill="#fff"/></svg>
+        </span>
+        <span>管理员 ▾</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-shell" id="appShell" data-figma="Frame/AppShell">
+    <!-- 侧栏 -->
+    <aside class="sidebar" data-figma="Frame/Sidebar" data-axure="侧栏菜单">
+      <button type="button" class="sidebar-item sidebar-link" data-axure="账本中心">
+        <svg class="menu-icon" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M6 6h6M6 9h6M6 12h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        账本中心
+        <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="sidebar-group is-open" data-figma="Sidebar/CollectionGroup" data-axure="采集中心">
+        <button type="button" class="sidebar-item sidebar-link">
+          <svg class="menu-icon" viewBox="0 0 18 18" fill="none"><path d="M9 2v10M5 8l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 14h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          采集中心
+          <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <ul class="sidebar-sub">
+          <li><a href="#" class="is-active" data-figma="Sidebar/DataCollection" data-axure="数据采集">数据采集</a></li>
+        </ul>
+      </div>
+
+      <button type="button" class="sidebar-item sidebar-link" data-axure="档案库">
+        <svg class="menu-icon" viewBox="0 0 18 18" fill="none"><path d="M3 4h12v11H3z" stroke="currentColor" stroke-width="1.2"/><path d="M3 7h12" stroke="currentColor" stroke-width="1.2"/></svg>
+        档案库
+        <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+
+      <button type="button" class="sidebar-item sidebar-link" data-axure="法规智库">
+        <svg class="menu-icon" viewBox="0 0 18 18" fill="none"><path d="M4 3h7l4 4v9H4z" stroke="currentColor" stroke-width="1.2"/><path d="M11 3v4h4" stroke="currentColor" stroke-width="1.2"/></svg>
+        法规智库
+        <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+
+      <button type="button" class="sidebar-item sidebar-link" data-axure="疑点中心">
+        <svg class="menu-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M9 6v4M9 12h.01" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        疑点中心
+        <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+
+      <button type="button" class="sidebar-item sidebar-link" data-axure="问题中心">
+        <svg class="menu-icon" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M6 9h6M6 12h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        问题中心
+        <svg class="arrow" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main-area" data-figma="Frame/MainContent" data-axure="主内容区">
+      <div class="sub-tabs" id="subTabs" data-figma="Frame/SubTabs" data-axure="二级标签栏">
+        <button type="button" class="tab" data-tab="business">业务中心</button>
+        <button type="button" class="tab" data-tab="knowledge">知识中心</button>
+        <button type="button" class="tab" data-tab="ledger">电子账本</button>
+        <button type="button" class="tab is-active" data-tab="collect">数据采集 <span class="tab-close">×</span></button>
+        <button type="button" class="tab" data-tab="voucher" id="tabVoucher">记账凭证采集</button>
+        <button type="button" class="tab" data-tab="audit-home">查账首页</button>
+        <button type="button" class="tab" data-tab="audit-list">查账列表</button>
+        <button type="button" class="tab" data-tab="audit-start" id="tabAuditStart">开始查账</button>
+        <button type="button" class="more">更多 ▾</button>
+      </div>
+
+      <!-- 单位列表页 -->
+      <div id="viewUnitList" class="page-view is-active" data-figma="View/UnitList" data-axure="单位列表">
+      <section class="filter-bar" data-figma="Frame/FilterBar" data-axure="筛选栏">
+        <label>
+          单位名称：
+          <input type="text" id="unitSearchInput" placeholder="请输入 单位名称" data-figma="Input/UnitName" />
+        </label>
+        <div class="filter-actions">
+          <button type="button" class="btn btn-default" id="unitResetBtn" data-axure="重置">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7a5 5 0 019-3.5M12 7a5 5 0 01-9 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M11 2v3.5H7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            重置
+          </button>
+          <button type="button" class="btn btn-primary" id="unitSearchBtn" data-axure="查询">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M9 9l3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            查询
+          </button>
+        </div>
+      </section>
+
+      <section class="unit-grid" id="unitGrid" data-figma="Frame/UnitGrid" data-axure="单位卡片列表">
+        <!-- 卡片由 JS 渲染，以下为静态占位（无 JS 时可见） -->
+        <article class="unit-card" data-unit-id="u01" data-figma="Card/Unit/01" data-axure="单位卡片">
+          <div class="unit-card-head">
+            <h3>浙江省国际技术设备招标有限公司</h3>
+            <span class="size-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>
+              0-50人
+            </span>
+          </div>
+          <div class="unit-meta">
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+              <span class="meta-text">911100000000123456</span>
+            </div>
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg>
+              <span class="meta-text">浙江省杭州市余杭区仓前街道...</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-box blue">
+              <div class="contact-name">张三<svg class="role-icon" viewBox="0 0 18 18" fill="none"><rect x="4" y="2" width="10" height="14" rx="1" stroke="#1890ff" stroke-width="1"/></svg></div>
+              <div class="contact-phone">13132268329</div>
+            </div>
+            <div class="contact-box yellow">
+              <div class="contact-name">黄蓉<svg class="role-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#faad14" stroke-width="1"/><path d="M9 6v4M9 12h.01" stroke="#faad14" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">15103856547</div>
+            </div>
+            <div class="contact-box green">
+              <div class="contact-name">王五<svg class="role-icon" viewBox="0 0 18 18" fill="none"><path d="M3 8h12M3 8l3-3M3 8l3 3" stroke="#52c41a" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">16152452541</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 卡片 2 -->
+        <article class="unit-card" data-unit-id="u02" data-figma="Card/Unit/02">
+          <div class="unit-card-head">
+            <h3>杭州微特电子</h3>
+            <span class="size-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>
+              300人
+            </span>
+          </div>
+          <div class="unit-meta">
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+              <span class="meta-text">91330110MA2H0X1234</span>
+            </div>
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg>
+              <span class="meta-text">浙江省杭州市余杭区五常街道...</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-box blue">
+              <div class="contact-name">李明<svg class="role-icon" viewBox="0 0 18 18" fill="none"><rect x="4" y="2" width="10" height="14" rx="1" stroke="#1890ff" stroke-width="1"/></svg></div>
+              <div class="contact-phone">13800138001</div>
+            </div>
+            <div class="contact-box yellow">
+              <div class="contact-name">赵敏<svg class="role-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#faad14" stroke-width="1"/><path d="M9 6v4M9 12h.01" stroke="#faad14" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">13900139002</div>
+            </div>
+            <div class="contact-box green">
+              <div class="contact-name">周杰<svg class="role-icon" viewBox="0 0 18 18" fill="none"><path d="M3 8h12M3 8l3-3M3 8l3 3" stroke="#52c41a" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">13700137003</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 卡片 3 -->
+        <article class="unit-card" data-unit-id="u03" data-figma="Card/Unit/03">
+          <div class="unit-card-head">
+            <h3>良渚管委会</h3>
+            <span class="size-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>
+              50-100人
+            </span>
+          </div>
+          <div class="unit-meta">
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+              <span class="meta-text">123301100000567890</span>
+            </div>
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg>
+              <span class="meta-text">浙江省杭州市余杭区良渚街道...</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-box blue">
+              <div class="contact-name">陈刚<svg class="role-icon" viewBox="0 0 18 18" fill="none"><rect x="4" y="2" width="10" height="14" rx="1" stroke="#1890ff" stroke-width="1"/></svg></div>
+              <div class="contact-phone">13600136004</div>
+            </div>
+            <div class="contact-box yellow">
+              <div class="contact-name">刘芳<svg class="role-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#faad14" stroke-width="1"/><path d="M9 6v4M9 12h.01" stroke="#faad14" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">13500135005</div>
+            </div>
+            <div class="contact-box green">
+              <div class="contact-name">吴强<svg class="role-icon" viewBox="0 0 18 18" fill="none"><path d="M3 8h12M3 8l3-3M3 8l3 3" stroke="#52c41a" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">13400134006</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 卡片 4 -->
+        <article class="unit-card" data-unit-id="u04" data-figma="Card/Unit/04">
+          <div class="unit-card-head">
+            <h3>编办</h3>
+            <span class="size-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>
+              100-500人
+            </span>
+          </div>
+          <div class="unit-meta">
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+              <span class="meta-text">113301100000987654</span>
+            </div>
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg>
+              <span class="meta-text">浙江省杭州市余杭区政府大楼...</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-box blue">
+              <div class="contact-name">孙伟<svg class="role-icon" viewBox="0 0 18 18" fill="none"><rect x="4" y="2" width="10" height="14" rx="1" stroke="#1890ff" stroke-width="1"/></svg></div>
+              <div class="contact-phone">13300133007</div>
+            </div>
+            <div class="contact-box yellow">
+              <div class="contact-name">钱丽<svg class="role-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#faad14" stroke-width="1"/><path d="M9 6v4M9 12h.01" stroke="#faad14" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">13200132008</div>
+            </div>
+            <div class="contact-box green">
+              <div class="contact-name">郑华<svg class="role-icon" viewBox="0 0 18 18" fill="none"><path d="M3 8h12M3 8l3-3M3 8l3 3" stroke="#52c41a" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">13100131009</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 卡片 5 -->
+        <article class="unit-card" data-unit-id="u05" data-figma="Card/Unit/05">
+          <div class="unit-card-head">
+            <h3>未来科技城</h3>
+            <span class="size-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>
+              0-50人
+            </span>
+          </div>
+          <div class="unit-meta">
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+              <span class="meta-text">123301100000111222</span>
+            </div>
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg>
+              <span class="meta-text">浙江省杭州市余杭区未来科技城...</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-box blue">
+              <div class="contact-name">冯涛<svg class="role-icon" viewBox="0 0 18 18" fill="none"><rect x="4" y="2" width="10" height="14" rx="1" stroke="#1890ff" stroke-width="1"/></svg></div>
+              <div class="contact-phone">13000130010</div>
+            </div>
+            <div class="contact-box yellow">
+              <div class="contact-name">何静<svg class="role-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#faad14" stroke-width="1"/><path d="M9 6v4M9 12h.01" stroke="#faad14" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">12900129011</div>
+            </div>
+            <div class="contact-box green">
+              <div class="contact-name">许峰<svg class="role-icon" viewBox="0 0 18 18" fill="none"><path d="M3 8h12M3 8l3-3M3 8l3 3" stroke="#52c41a" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">12800128012</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 卡片 6 -->
+        <article class="unit-card" data-unit-id="u06" data-figma="Card/Unit/06">
+          <div class="unit-card-head">
+            <h3>余杭区医保局</h3>
+            <span class="size-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>
+              100-500人
+            </span>
+          </div>
+          <div class="unit-meta">
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+              <span class="meta-text">113301100000333444</span>
+            </div>
+            <div class="unit-meta-row">
+              <svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg>
+              <span class="meta-text">浙江省杭州市余杭区南苑街道...</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-box blue">
+              <div class="contact-name">沈洁<svg class="role-icon" viewBox="0 0 18 18" fill="none"><rect x="4" y="2" width="10" height="14" rx="1" stroke="#1890ff" stroke-width="1"/></svg></div>
+              <div class="contact-phone">12700127013</div>
+            </div>
+            <div class="contact-box yellow">
+              <div class="contact-name">韩梅<svg class="role-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#faad14" stroke-width="1"/><path d="M9 6v4M9 12h.01" stroke="#faad14" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">12600126014</div>
+            </div>
+            <div class="contact-box green">
+              <div class="contact-name">杨帆<svg class="role-icon" viewBox="0 0 18 18" fill="none"><path d="M3 8h12M3 8l3-3M3 8l3 3" stroke="#52c41a" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <div class="contact-phone">12500125015</div>
+            </div>
+          </div>
+        </article>
+      </section>
+      </div>
+
+      <!-- 单位详情 · 查账场景页 -->
+      <div id="viewUnitDetail" class="page-view" data-figma="View/UnitDetail" data-axure="查账场景配置">
+        <section class="detail-header" data-figma="Frame/DetailHeader">
+          <div class="detail-header-left">
+            <button type="button" class="btn-back" id="btnBackToList" data-axure="返回列表">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8 3L4 7l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              返回
+            </button>
+            <div class="detail-title">
+              <h2 id="detailUnitName">—</h2>
+              <p id="detailUnitMeta">配置该单位需要进行审计查账的业务场景</p>
+            </div>
+          </div>
+          <div class="detail-header-right">
+            <span class="scene-count">共 <strong id="sceneCount">0</strong> 个类型</span>
+            <button type="button" class="btn-add-scene" id="btnAddScene" data-figma="Button/AddScene" data-axure="新增类型">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              新增类型
+            </button>
+          </div>
+        </section>
+        <section class="scene-grid" id="sceneGrid" data-figma="Frame/SceneGrid" data-axure="场景卡片列表"></section>
+      </div>
+
+      <!-- 记账凭证采集页 -->
+      <div id="viewVoucherCollect" class="page-view" data-figma="View/VoucherCollect" data-axure="记账凭证采集">
+        <section class="voucher-filter" data-figma="Frame/VoucherFilter" data-axure="凭证筛选栏">
+          <div class="field">
+            <label for="vfUnit">核算单位</label>
+            <input type="text" id="vfUnit" placeholder="请输入核算单位" />
+          </div>
+          <div class="field">
+            <label for="vfNo">凭证编号</label>
+            <input type="text" id="vfNo" placeholder="请输入凭证编号" />
+          </div>
+          <div class="field">
+            <label for="vfMonth">凭证月份</label>
+            <input type="month" id="vfMonth" />
+          </div>
+          <div class="filter-actions">
+            <button type="button" class="btn btn-default" id="vfResetBtn">重置</button>
+            <button type="button" class="btn btn-primary" id="vfSearchBtn">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M9 9l3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              查询
+            </button>
+          </div>
+        </section>
+        <div class="voucher-toolbar" data-figma="Frame/VoucherToolbar">
+          <button type="button" class="btn-upload" id="btnUploadVoucher" data-axure="上传记账凭证">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 10V3M5 6l3-3 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            上传记账凭证
+          </button>
+          <button type="button" class="btn-back-primary" id="btnBackToScene" data-axure="返回场景">返回</button>
+        </div>
+        <section class="voucher-grid" id="voucherGrid" data-figma="Frame/VoucherGrid" data-axure="凭证卡片列表"></section>
+        <div class="voucher-pagination" id="voucherPagination" data-figma="Frame/VoucherPagination">
+          <span class="total">共 <strong id="voucherTotal">0</strong> 条</span>
+          <button type="button" class="page-btn" id="pagePrev" disabled>‹</button>
+          <button type="button" class="page-btn is-active" id="pageCurrent">1</button>
+          <button type="button" class="page-btn" id="pageNext" disabled>›</button>
+          <span class="page-goto">前往 <input type="text" id="pageGotoInput" value="1" /> 页</span>
+        </div>
+      </div>
+
+      <!-- 查账中心 · 开始查账 -->
+      <div id="viewAuditStart" class="page-view" data-figma="View/AuditStart" data-axure="开始查账">
+        <section class="task-header" data-figma="Frame/TaskHeader" data-axure="任务进度头">
+          <div class="task-meta">
+            <span class="task-tag">任务编号: cs001</span>
+            <h2>cs001</h2>
+            <p>被检查单位：未来科技城</p>
+          </div>
+          <div class="progress-track" data-figma="Component/ProgressTimeline">
+            <div class="progress-step is-done">
+              <span class="step-dot"></span>
+              <span class="step-label">数据采集<br>已采集</span>
+            </div>
+            <div class="progress-step is-done is-current">
+              <span class="step-dot"></span>
+              <span class="step-label">数据解析<br>解析成功</span>
+            </div>
+            <div class="progress-step is-done">
+              <span class="step-dot"></span>
+              <span class="step-label">AI查账<br>查账成功</span>
+            </div>
+            <div class="progress-step is-done">
+              <span class="step-dot"></span>
+              <span class="step-label">疑点清单<br>疑点生成</span>
+            </div>
+            <div class="progress-step is-pending">
+              <span class="step-dot"></span>
+              <span class="step-label">问题清单<br>待生成</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="material-panel" data-figma="Frame/MaterialList" data-axure="材料清单">
+          <div class="material-head">
+            <h3>材料清单</h3>
+            <button type="button" class="btn-edit-material" data-axure="编辑材料清单">编辑材料清单</button>
+          </div>
+
+          <div class="material-row" data-figma="MaterialRow/01">
+            <div class="material-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 3h7l4 4v9H4z" stroke="currentColor" stroke-width="1.2"/><path d="M11 3v4h4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+            <div class="material-info">
+              <div class="material-title">夜餐费场景·加班公示表</div>
+              <div class="material-sub">材料目录</div>
+            </div>
+            <div class="material-status">已采集文件数：<strong>0</strong></div>
+            <div class="material-actions">
+              <button type="button" class="mat-icon-btn" aria-label="删除"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5.5 4V3h3v1M5 4v7M7 4v7M9 4v7M4.5 4l.5 8h4l.5-8" stroke="currentColor" stroke-width="1.1"/></svg></button>
+              <button type="button" class="mat-link-btn">清空解析</button>
+              <select class="mat-year-select"><option>2025年</option><option>2024年</option></select>
+              <button type="button" class="mat-action-btn">高拍仪采集</button>
+              <button type="button" class="mat-action-btn primary">+ 本地上传</button>
+            </div>
+          </div>
+
+          <div class="material-row" data-figma="MaterialRow/02">
+            <div class="material-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 3h7l4 4v9H4z" stroke="currentColor" stroke-width="1.2"/><path d="M11 3v4h4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+            <div class="material-info">
+              <div class="material-title">夜餐费场景·加班登记表</div>
+              <div class="material-sub">材料目录</div>
+            </div>
+            <div class="material-status">已采集文件数：<strong>4</strong></div>
+            <div class="material-actions">
+              <button type="button" class="mat-icon-btn" aria-label="删除"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5.5 4V3h3v1M5 4v7M7 4v7M9 4v7M4.5 4l.5 8h4l.5-8" stroke="currentColor" stroke-width="1.1"/></svg></button>
+              <button type="button" class="mat-link-btn">清空解析</button>
+              <select class="mat-year-select"><option>2025年</option><option>2024年</option></select>
+              <button type="button" class="mat-action-btn">高拍仪采集</button>
+              <button type="button" class="mat-action-btn primary">+ 本地上传</button>
+            </div>
+          </div>
+
+          <div class="material-row" data-figma="MaterialRow/03">
+            <div class="material-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 3h7l4 4v9H4z" stroke="currentColor" stroke-width="1.2"/><path d="M11 3v4h4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+            <div class="material-info">
+              <div class="material-title">夜餐费场景·记账凭证解析模板</div>
+              <div class="material-sub">材料目录</div>
+            </div>
+            <div class="material-status">已关联记账凭证数：<strong>2</strong></div>
+            <div class="material-actions">
+              <button type="button" class="mat-icon-btn" aria-label="删除"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5.5 4V3h3v1M5 4v7M7 4v7M9 4v7M4.5 4l.5 8h4l.5-8" stroke="currentColor" stroke-width="1.1"/></svg></button>
+              <button type="button" class="mat-link-btn" id="btnLinkVoucher" data-axure="关联记账凭证">+ 关联记账凭证</button>
+              <select class="mat-year-select"><option>2025年</option><option>2024年</option></select>
+              <button type="button" class="mat-action-btn">高拍仪采集</button>
+              <button type="button" class="mat-action-btn primary">+ 本地上传</button>
+            </div>
+          </div>
+
+          <div class="material-row" data-figma="MaterialRow/04">
+            <div class="material-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 3h7l4 4v9H4z" stroke="currentColor" stroke-width="1.2"/><path d="M11 3v4h4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+            <div class="material-info">
+              <div class="material-title">夜餐费场景·加班汇总表</div>
+              <div class="material-sub">材料目录</div>
+            </div>
+            <div class="material-status">已采集文件数：<strong>0</strong></div>
+            <div class="material-actions">
+              <button type="button" class="mat-icon-btn" aria-label="删除"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5.5 4V3h3v1M5 4v7M7 4v7M9 4v7M4.5 4l.5 8h4l.5-8" stroke="currentColor" stroke-width="1.1"/></svg></button>
+              <button type="button" class="mat-link-btn">清空解析</button>
+              <select class="mat-year-select"><option>2025年</option><option>2024年</option></select>
+              <button type="button" class="mat-action-btn">高拍仪采集</button>
+              <button type="button" class="mat-action-btn primary">+ 本地上传</button>
+            </div>
+          </div>
+        </section>
+
+        <footer class="audit-footer" data-figma="Frame/AuditFooter">
+          <button type="button" class="btn btn-default">返回查账列表</button>
+          <button type="button" class="btn btn-primary">开始解析</button>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <button type="button" class="float-assistant" id="floatAssistant" aria-label="智能助手" data-figma="Float/Assistant" hidden></button>
+
+  <!-- 新增场景弹窗 -->
+  <div class="modal-mask" id="addSceneModal" data-figma="Modal/AddScene" data-axure="新增场景弹窗">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>新增查账类型</h3>
+        <button type="button" class="modal-close" id="modalCloseBtn" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <label for="sceneName">类型名称</label>
+          <input type="text" id="sceneName" placeholder="请输入类型名称" data-figma="Input/SceneName" />
+        </div>
+        <div class="form-field">
+          <div class="form-label-row">
+            <label for="sceneDesc">类型描述</label>
+            <span class="form-char-count" id="sceneDescCount">0/50</span>
+          </div>
+          <textarea id="sceneDesc" maxlength="50" placeholder="请输入类型描述，最多50字" data-figma="Input/SceneDesc"></textarea>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-default" id="modalCancelBtn">取消</button>
+        <button type="button" class="btn btn-primary" id="modalConfirmBtn">确定新增</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 编辑类型弹窗 -->
+  <div class="modal-mask" id="editSceneModal" data-figma="Modal/EditScene" data-axure="编辑类型弹窗">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>编辑查账类型</h3>
+        <button type="button" class="modal-close" id="editSceneCloseBtn" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <label for="editSceneName">类型名称</label>
+          <input type="text" id="editSceneName" placeholder="请输入类型名称" data-figma="Input/EditSceneName" />
+        </div>
+        <div class="form-field">
+          <div class="form-label-row">
+            <label for="editSceneDesc">类型描述</label>
+            <span class="form-char-count" id="editSceneDescCount">0/50</span>
+          </div>
+          <textarea id="editSceneDesc" maxlength="50" placeholder="请输入类型描述，最多50字" data-figma="Input/EditSceneDesc"></textarea>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-default" id="editSceneCancelBtn">取消</button>
+        <button type="button" class="btn btn-primary" id="editSceneConfirmBtn">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 删除场景确认弹窗 -->
+  <div class="modal-mask" id="deleteSceneModal" data-figma="Modal/DeleteScene" data-axure="删除场景确认">
+    <div class="modal-box confirm-sm">
+      <div class="modal-head">
+        <h3>删除确认</h3>
+        <button type="button" class="modal-close" id="deleteSceneCloseBtn" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-body" id="deleteSceneMsg">该类型存在 0 份凭证将同步删除，确认删除？</p>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-default" id="deleteSceneNoBtn" data-axure="取消">取消</button>
+        <button type="button" class="btn btn-danger" id="deleteSceneYesBtn" data-axure="确认">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 关联记账凭证抽屉 -->
+  <div class="drawer-mask" id="linkVoucherDrawer" data-figma="Drawer/LinkVoucher" data-axure="关联记账凭证抽屉">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <h3>关联记账凭证</h3>
+        <button type="button" class="modal-close" id="linkVoucherCloseBtn" aria-label="关闭">×</button>
+      </div>
+      <div class="drawer-body">
+        <div class="link-voucher-filter" data-figma="Frame/LinkVoucherFilter">
+          <div class="field">
+            <label for="lvUnitTrigger">核算单位</label>
+            <div class="search-select" id="lvUnitSelect" data-figma="Select/LinkVoucherUnit">
+              <input type="hidden" id="lvUnit" value="" />
+              <button type="button" class="search-select-trigger" id="lvUnitTrigger">
+                <span class="search-select-value is-placeholder" id="lvUnitLabel">请选择 核算单位</span>
+                <span class="search-select-arrow">▾</span>
+              </button>
+              <div class="search-select-dropdown">
+                <input type="text" class="search-select-search" id="lvUnitSearch" placeholder="搜索单位" autocomplete="off" />
+                <ul class="search-select-list" id="lvUnitList"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="lvNo">凭证编号</label>
+            <input type="text" id="lvNo" placeholder="请输入 凭证编号" />
+          </div>
+          <div class="field">
+            <label for="lvMonth">凭证月份</label>
+            <input type="month" id="lvMonth" placeholder="请选择月份" />
+          </div>
+          <div class="field">
+            <label for="lvTypeTrigger">类型</label>
+            <div class="search-select" id="lvTypeSelect" data-figma="Select/LinkVoucherType">
+              <input type="hidden" id="lvType" value="" />
+              <button type="button" class="search-select-trigger" id="lvTypeTrigger">
+                <span class="search-select-value is-placeholder" id="lvTypeLabel">请选择 类型</span>
+                <span class="search-select-arrow">▾</span>
+              </button>
+              <div class="search-select-dropdown">
+                <input type="text" class="search-select-search" id="lvTypeSearch" placeholder="搜索类型" autocomplete="off" />
+                <ul class="search-select-list" id="lvTypeList"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="filter-actions">
+            <button type="button" class="btn btn-default" id="lvResetBtn">重置</button>
+            <button type="button" class="btn btn-primary" id="lvSearchBtn">查询</button>
+          </div>
+        </div>
+
+        <div class="link-voucher-table-wrap" data-figma="Frame/LinkVoucherTable">
+          <table class="link-voucher-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="lvCheckAll" aria-label="全选" /></th>
+                <th>核算单位</th>
+                <th>凭证编号</th>
+                <th>凭证月份</th>
+                <th>类型</th>
+              </tr>
+            </thead>
+            <tbody id="linkVoucherTableBody">
+              <tr>
+                <td><input type="checkbox" class="lv-row-check" checked /></td>
+                <td>杭州市余杭区委杭州市余杭区人民政府信访局</td>
+                <td>JZ-12-0055(财)</td>
+                <td>2026-01</td>
+                <td>夜餐费</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="lv-row-check" checked /></td>
+                <td>杭州市余杭区委杭州市余杭区人民政府信访局</td>
+                <td>JZ-8-0060(预)</td>
+                <td>2026-01</td>
+                <td>差旅费</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="drawer-pagination" data-figma="Frame/LinkVoucherPagination">
+          <span>共 <strong id="lvTotal">2</strong> 条</span>
+          <button type="button" class="page-btn" disabled>‹</button>
+          <button type="button" class="page-btn is-active">1</button>
+          <button type="button" class="page-btn" disabled>›</button>
+          <select aria-label="每页条数">
+            <option>10条/页</option>
+            <option>20条/页</option>
+          </select>
+          <span class="page-goto">前往 <input type="text" value="1" /> 页</span>
+        </div>
+      </div>
+      <div class="drawer-foot">
+        <button type="button" class="btn btn-default" id="linkVoucherCancelBtn">取消</button>
+        <button type="button" class="btn btn-primary" id="linkVoucherSaveBtn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+      function pad(n) { return n < 10 ? "0" + n : "" + n; }
+      function tick() {
+        var now = new Date();
+        document.getElementById("clock").textContent =
+          pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
+        document.getElementById("date").textContent =
+          weekdays[now.getDay()] + " " + now.getFullYear() + "/" + pad(now.getMonth() + 1) + "/" + pad(now.getDate());
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    (function () {
+      var SCENE_TEMPLATES = [
+        { name: "劳务费", desc: "劳务费记账凭证及附件", color: "c-blue", icon: "👷" },
+        { name: "公务接待费", desc: "公务接待记账凭证及附件", color: "c-orange", icon: "🍽" },
+        { name: "差旅费", desc: "差旅费记账凭证及附件", color: "c-green", icon: "✈" },
+        { name: "公务用车费", desc: "公务用车费记账凭证及附件", color: "c-purple", icon: "🚗" },
+        { name: "福利费", desc: "福利费记账凭证及附件", color: "c-cyan", icon: "🎁" },
+        { name: "会议费", desc: "会议费记账凭证及附件", color: "c-red", icon: "📋" },
+        { name: "夜餐费", desc: "夜餐费记账凭证及附件", color: "c-gold", icon: "🌙" },
+        { name: "政府采购", desc: "政府采购记账凭证及附件", color: "c-indigo", icon: "📦" }
+      ];
+
+      var UNITS = [
+        { id: "u01", name: "浙江省国际技术设备招标有限公司", code: "911100000000123456", size: "0-50人", address: "浙江省杭州市余杭区仓前街道...", contacts: [{ name: "张三", phone: "13132268329", type: "blue" }, { name: "黄蓉", phone: "15103856547", type: "yellow" }, { name: "王五", phone: "16152452541", type: "green" }] },
+        { id: "u02", name: "杭州微特电子", code: "91330110MA2H0X1234", size: "300人", address: "浙江省杭州市余杭区五常街道...", contacts: [{ name: "李明", phone: "13800138001", type: "blue" }, { name: "赵敏", phone: "13900139002", type: "yellow" }, { name: "周杰", phone: "13700137003", type: "green" }] },
+        { id: "u03", name: "良渚管委会", code: "123301100000567890", size: "50-100人", address: "浙江省杭州市余杭区良渚街道...", contacts: [{ name: "陈刚", phone: "13600136004", type: "blue" }, { name: "刘芳", phone: "13500135005", type: "yellow" }, { name: "吴强", phone: "13400134006", type: "green" }] },
+        { id: "u04", name: "编办", code: "113301100000987654", size: "100-500人", address: "浙江省杭州市余杭区政府大楼...", contacts: [{ name: "孙伟", phone: "13300133007", type: "blue" }, { name: "钱丽", phone: "13200132008", type: "yellow" }, { name: "郑华", phone: "13100131009", type: "green" }] },
+        { id: "u05", name: "未来科技城", code: "123301100000111222", size: "0-50人", address: "浙江省杭州市余杭区未来科技城...", contacts: [{ name: "冯涛", phone: "13000130010", type: "blue" }, { name: "何静", phone: "12900129011", type: "yellow" }, { name: "许峰", phone: "12800128012", type: "green" }] },
+        { id: "u06", name: "余杭区医保局", code: "113301100000333444", size: "100-500人", address: "浙江省杭州市余杭区南苑街道...", contacts: [{ name: "沈洁", phone: "12700127013", type: "blue" }, { name: "韩梅", phone: "12600126014", type: "yellow" }, { name: "杨帆", phone: "12500125015", type: "green" }] }
+      ];
+
+      var unitScenes = {};
+      var currentUnitId = null;
+      var currentSceneId = null;
+      var currentSceneName = null;
+      var sceneIdSeq = 100;
+      var voucherFilter = {};
+      var pendingDeleteSceneId = null;
+      var pendingEditSceneId = null;
+      var DESC_MAX = 50;
+      var currentModule = "knowledge";
+      var lastKnowledgeView = "list";
+      var AUDIT_UNIT_ID = "u05";
+
+      var VOUCHER_POOL = [
+        { no: "JZ-12-0003(财)", month: "2025-04", type: "" },
+        { no: "JZ-04-0028(财)", month: "2025-04", type: "" },
+        { no: "JZ-04-0029(财)", month: "2025-04", type: "" },
+        { no: "JZ-04-0030(财)", month: "2025-04", type: "会议费" },
+        { no: "JZ-04-0031(财)", month: "2025-04", type: "夜餐费" },
+        { no: "JZ-04-0032(财)", month: "2025-04", type: "" },
+        { no: "JZ-04-0033(财)", month: "2025-04", type: "" }
+      ];
+
+      function defaultScenes() {
+        return SCENE_TEMPLATES.map(function (t, i) {
+          return { id: "sc-" + (i + 1), name: t.name, desc: t.desc, color: t.color, icon: t.icon };
+        });
+      }
+
+      function initUnitScenes() {
+        UNITS.forEach(function (u) {
+          unitScenes[u.id] = defaultScenes();
+        });
+      }
+
+      function getTemplate(name) {
+        return SCENE_TEMPLATES.find(function (t) { return t.name === name; }) || {
+          name: name, desc: "自定义审计查账场景", color: "c-blue", icon: "📌"
+        };
+      }
+
+      function findUnit(id) {
+        return UNITS.find(function (u) { return u.id === id; });
+      }
+
+      function renderUnitGrid(filter) {
+        var grid = document.getElementById("unitGrid");
+        var keyword = (filter || "").trim().toLowerCase();
+        var list = UNITS.filter(function (u) {
+          return !keyword || u.name.toLowerCase().indexOf(keyword) >= 0;
+        });
+
+        grid.innerHTML = list.map(function (u) {
+          return (
+            '<article class="unit-card" data-unit-id="' + u.id + '" data-figma="Card/Unit/' + u.id + '" data-axure="单位卡片">' +
+              '<div class="unit-card-head"><h3>' + u.name + '</h3>' +
+              '<span class="size-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2" stroke="currentColor" stroke-width="1"/><path d="M2 10c0-2.2 1.8-3 4-3s4 .8 4 3" stroke="currentColor" stroke-width="1"/></svg>' + u.size + '</span></div>' +
+              '<div class="unit-meta">' +
+                '<div class="unit-meta-row"><svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.5-3.2 3 1 4.5L8 11.5 3.7 13l1-4.5L1.5 5.5 6 5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg><span class="meta-text">' + u.code + '</span></div>' +
+                '<div class="unit-meta-row"><svg class="meta-icon" viewBox="0 0 16 16" fill="none"><path d="M8 8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" stroke-width="1.1"/><path d="M8 14s5-3.5 5-7a5 5 0 10-10 0c0 3.5 5 7 5 7z" stroke="currentColor" stroke-width="1.1"/></svg><span class="meta-text">' + u.address + '</span></div>' +
+              '</div>' +
+              '<div class="contact-row">' + u.contacts.map(function (c) {
+                return '<div class="contact-box ' + c.type + '"><div class="contact-name">' + c.name + '</div><div class="contact-phone">' + c.phone + '</div></div>';
+              }).join("") + '</div>' +
+            '</article>'
+          );
+        }).join("");
+
+        grid.querySelectorAll(".unit-card").forEach(function (card) {
+          card.addEventListener("click", function () {
+            openUnitDetail(card.getAttribute("data-unit-id"));
+          });
+        });
+      }
+
+      function showView(view) {
+        if (view !== "audit") lastKnowledgeView = view;
+        document.getElementById("viewUnitList").classList.toggle("is-active", view === "list");
+        document.getElementById("viewUnitDetail").classList.toggle("is-active", view === "detail");
+        document.getElementById("viewVoucherCollect").classList.toggle("is-active", view === "voucher");
+        document.getElementById("viewAuditStart").classList.toggle("is-active", view === "audit");
+        updateSubTabs(view);
+      }
+
+      function switchModule(module) {
+        currentModule = module;
+        document.querySelectorAll(".main-menu a[data-nav]").forEach(function (link) {
+          link.classList.toggle("is-active", link.getAttribute("data-nav") === module);
+        });
+        var shell = document.getElementById("appShell");
+        var assistant = document.getElementById("floatAssistant");
+        if (module === "audit") {
+          shell.classList.add("is-audit-mode");
+          assistant.hidden = false;
+          document.getElementById("viewUnitList").classList.remove("is-active");
+          document.getElementById("viewUnitDetail").classList.remove("is-active");
+          document.getElementById("viewVoucherCollect").classList.remove("is-active");
+          document.getElementById("viewAuditStart").classList.add("is-active");
+          updateSubTabs("audit");
+        } else if (module === "knowledge") {
+          shell.classList.remove("is-audit-mode");
+          assistant.hidden = true;
+          document.getElementById("viewAuditStart").classList.remove("is-active");
+          showView(lastKnowledgeView);
+        }
+      }
+
+      function updateSubTabs(view) {
+        var tabs = document.querySelectorAll("#subTabs .tab");
+        tabs.forEach(function (tab) {
+          tab.classList.remove("is-active");
+        });
+        if (view === "audit") {
+          document.getElementById("tabAuditStart").classList.add("is-active");
+        } else if (view === "voucher") {
+          document.getElementById("tabVoucher").classList.add("is-active");
+        } else if (view === "list" || view === "detail") {
+          document.querySelector('#subTabs .tab[data-tab="collect"]').classList.add("is-active");
+        }
+      }
+
+      function getVouchersForScene(unitName, sceneName) {
+        return VOUCHER_POOL.map(function (v, i) {
+          var type = v.type || (i % 3 === 0 ? sceneName : "");
+          return {
+            id: "v-" + i,
+            no: v.no,
+            unit: unitName,
+            month: v.month,
+            type: type,
+            status: "解析完成"
+          };
+        }).filter(function (v) {
+          return !v.type || v.type === sceneName || v.type === "";
+        });
+      }
+
+      function renderVouchers() {
+        var unit = findUnit(currentUnitId);
+        if (!unit) return;
+        var all = getVouchersForScene(unit.name, currentSceneName);
+        var f = voucherFilter;
+        var list = all.filter(function (v) {
+          if (f.unit && v.unit.indexOf(f.unit) < 0) return false;
+          if (f.no && v.no.indexOf(f.no) < 0) return false;
+          if (f.month && v.month !== f.month) return false;
+          return true;
+        });
+
+        document.getElementById("voucherTotal").textContent = list.length;
+        var grid = document.getElementById("voucherGrid");
+
+        if (!list.length) {
+          grid.innerHTML = '<div class="voucher-empty" data-figma="Empty/NoVoucher">暂无符合条件的记账凭证</div>';
+          return;
+        }
+
+        grid.innerHTML = list.map(function (v) {
+          var typeText = v.type || "--";
+          var typeClass = v.type ? "" : " empty";
+          return (
+            '<article class="voucher-card" data-voucher-id="' + v.id + '" data-figma="Card/Voucher/' + v.id + '" data-axure="凭证卡片">' +
+              '<div class="voucher-card-head">' +
+                '<span>凭证号: ' + v.no + '</span>' +
+                '<span class="status">' + v.status + '</span>' +
+              '</div>' +
+              '<div class="voucher-card-body">' +
+                '<div class="voucher-row"><span class="lbl">核算单位</span><span class="val">' + v.unit + '</span></div>' +
+                '<div class="voucher-row"><span class="lbl">凭证月份</span><span class="val">' + v.month + '</span></div>' +
+                '<div class="voucher-row"><span class="lbl">类型</span><span class="val' + typeClass + '">' + typeText + '</span></div>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+      }
+
+      function openVoucherCollect(sceneId, sceneName) {
+        currentSceneId = sceneId;
+        currentSceneName = sceneName;
+        var unit = findUnit(currentUnitId);
+        if (!unit) return;
+
+        voucherFilter = { unit: unit.name };
+        document.getElementById("vfUnit").value = unit.name;
+        document.getElementById("vfNo").value = "";
+        document.getElementById("vfMonth").value = "";
+
+        renderVouchers();
+        showView("voucher");
+      }
+
+      function renderScenes() {
+        var scenes = unitScenes[currentUnitId] || [];
+        var grid = document.getElementById("sceneGrid");
+        document.getElementById("sceneCount").textContent = scenes.length;
+
+        if (!scenes.length) {
+          grid.innerHTML =
+            '<div class="scene-empty" data-figma="Empty/NoScene">' +
+              '<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="28" rx="4" stroke="#91d5ff" stroke-width="2"/><path d="M16 22h16M16 28h10" stroke="#91d5ff" stroke-width="2" stroke-linecap="round"/></svg>' +
+              '<span>暂无查账场景，请点击「新增类型」添加</span>' +
+            '</div>';
+          return;
+        }
+
+        var unit = findUnit(currentUnitId);
+
+        grid.innerHTML = scenes.map(function (s) {
+          var voucherCount = unit ? getVouchersForScene(unit.name, s.name).length : 0;
+          return (
+            '<article class="scene-card" data-scene-id="' + s.id + '" data-figma="Card/Scene/' + s.id + '" data-axure="场景卡片">' +
+              '<div class="scene-card-top"><h4>' + s.name + '</h4></div>' +
+              '<p class="scene-desc">' + s.desc + '</p>' +
+              '<div class="scene-card-foot">' +
+                '<span class="scene-voucher-count" data-figma="Scene/VoucherCount"><strong>' + voucherCount + '</strong> 张凭证</span>' +
+                '<div class="scene-actions">' +
+                  '<button type="button" class="btn-view" data-action="view" data-axure="查看">查看</button>' +
+                  '<button type="button" class="btn-edit" data-action="edit" data-axure="编辑">编辑</button>' +
+                  '<button type="button" class="btn-delete" data-action="delete" data-axure="删除">删除</button>' +
+                '</div>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+
+        grid.querySelectorAll('[data-action="delete"]').forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            openDeleteSceneModal(btn.closest(".scene-card").getAttribute("data-scene-id"));
+          });
+        });
+
+        grid.querySelectorAll('[data-action="edit"]').forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            openEditSceneModal(btn.closest(".scene-card").getAttribute("data-scene-id"));
+          });
+        });
+
+        grid.querySelectorAll(".scene-card").forEach(function (card) {
+          card.addEventListener("click", function () {
+            var sid = card.getAttribute("data-scene-id");
+            var scene = (unitScenes[currentUnitId] || []).find(function (s) { return s.id === sid; });
+            if (scene) openVoucherCollect(scene.id, scene.name);
+          });
+        });
+      }
+
+      function openUnitDetail(unitId) {
+        var unit = findUnit(unitId);
+        if (!unit) return;
+        currentUnitId = unitId;
+        document.getElementById("detailUnitName").textContent = unit.name;
+        document.getElementById("detailUnitMeta").textContent = "统一社会信用代码：" + unit.code;
+        renderScenes();
+        showView("detail");
+      }
+
+      function updateDescCounter(textareaId, counterId) {
+        var el = document.getElementById(textareaId);
+        var countEl = document.getElementById(counterId);
+        if (!el || !countEl) return;
+        var len = el.value.length;
+        countEl.textContent = len + "/" + DESC_MAX;
+        countEl.classList.toggle("is-limit", len >= DESC_MAX);
+      }
+
+      function openAddModal() {
+        document.getElementById("sceneName").value = "";
+        document.getElementById("sceneDesc").value = "";
+        updateDescCounter("sceneDesc", "sceneDescCount");
+        document.getElementById("addSceneModal").classList.add("is-open");
+      }
+
+      function closeAddModal() {
+        document.getElementById("addSceneModal").classList.remove("is-open");
+      }
+
+      function openEditSceneModal(sceneId) {
+        var scene = (unitScenes[currentUnitId] || []).find(function (s) { return s.id === sceneId; });
+        if (!scene) return;
+        pendingEditSceneId = sceneId;
+        document.getElementById("editSceneName").value = scene.name;
+        document.getElementById("editSceneDesc").value = scene.desc;
+        updateDescCounter("editSceneDesc", "editSceneDescCount");
+        document.getElementById("editSceneModal").classList.add("is-open");
+      }
+
+      function closeEditSceneModal() {
+        pendingEditSceneId = null;
+        document.getElementById("editSceneModal").classList.remove("is-open");
+      }
+
+      function confirmEditScene() {
+        if (!pendingEditSceneId) return;
+        var name = document.getElementById("editSceneName").value.trim();
+        var desc = document.getElementById("editSceneDesc").value.trim();
+        if (!name) {
+          alert("请输入类型名称");
+          return;
+        }
+        if (!desc) {
+          alert("请输入类型描述");
+          return;
+        }
+        if (desc.length > DESC_MAX) {
+          alert("类型描述最多50字");
+          return;
+        }
+        var scenes = unitScenes[currentUnitId] || [];
+        var duplicate = scenes.some(function (s) {
+          return s.id !== pendingEditSceneId && s.name === name;
+        });
+        if (duplicate) {
+          alert("该类型名称已存在，请更换");
+          return;
+        }
+        var scene = scenes.find(function (s) { return s.id === pendingEditSceneId; });
+        if (scene) {
+          scene.name = name;
+          scene.desc = desc;
+        }
+        closeEditSceneModal();
+        renderScenes();
+      }
+
+      function openDeleteSceneModal(sceneId) {
+        pendingDeleteSceneId = sceneId;
+        var scene = (unitScenes[currentUnitId] || []).find(function (s) { return s.id === sceneId; });
+        var unit = findUnit(currentUnitId);
+        var count = unit && scene ? getVouchersForScene(unit.name, scene.name).length : 0;
+        document.getElementById("deleteSceneMsg").innerHTML =
+          "该类型存在<strong>" + count + "</strong>份凭证将同步删除，确认删除？";
+        document.getElementById("deleteSceneModal").classList.add("is-open");
+      }
+
+      function closeDeleteSceneModal() {
+        pendingDeleteSceneId = null;
+        document.getElementById("deleteSceneModal").classList.remove("is-open");
+      }
+
+      function confirmDeleteScene() {
+        if (!pendingDeleteSceneId) return;
+        unitScenes[currentUnitId] = unitScenes[currentUnitId].filter(function (s) {
+          return s.id !== pendingDeleteSceneId;
+        });
+        closeDeleteSceneModal();
+        renderScenes();
+      }
+
+      function confirmAddScene() {
+        var name = document.getElementById("sceneName").value.trim();
+        var desc = document.getElementById("sceneDesc").value.trim();
+        if (!name) {
+          alert("请输入类型名称");
+          return;
+        }
+        if (!desc) {
+          alert("请输入类型描述");
+          return;
+        }
+        if (desc.length > DESC_MAX) {
+          alert("类型描述最多50字");
+          return;
+        }
+        var existing = (unitScenes[currentUnitId] || []).map(function (s) { return s.name; });
+        if (existing.indexOf(name) >= 0) {
+          alert("该场景已存在，请勿重复添加");
+          return;
+        }
+        var tpl = getTemplate(name);
+        sceneIdSeq += 1;
+        unitScenes[currentUnitId].push({
+          id: "sc-new-" + sceneIdSeq,
+          name: name,
+          desc: desc,
+          color: tpl.color,
+          icon: tpl.icon
+        });
+        renderScenes();
+        closeAddModal();
+      }
+
+      initUnitScenes();
+      renderUnitGrid("");
+
+      document.querySelectorAll(".main-menu a[data-nav]").forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          var nav = link.getAttribute("data-nav");
+          if (nav === "audit" || nav === "knowledge") {
+            switchModule(nav);
+          }
+        });
+      });
+
+      document.getElementById("tabAuditStart").addEventListener("click", function () {
+        switchModule("audit");
+      });
+
+      document.querySelector('#subTabs .tab[data-tab="collect"]').addEventListener("click", function () {
+        if (currentModule !== "knowledge") switchModule("knowledge");
+      });
+
+      document.getElementById("btnBackToList").addEventListener("click", function () {
+        currentUnitId = null;
+        currentSceneId = null;
+        currentSceneName = null;
+        showView("list");
+      });
+
+      document.getElementById("btnBackToScene").addEventListener("click", function () {
+        currentSceneId = null;
+        currentSceneName = null;
+        showView("detail");
+      });
+
+      document.getElementById("btnUploadVoucher").addEventListener("click", function () {
+        alert("上传记账凭证（原型演示）\n当前场景：" + (currentSceneName || "—"));
+      });
+
+      document.getElementById("vfSearchBtn").addEventListener("click", function () {
+        voucherFilter = {
+          unit: document.getElementById("vfUnit").value.trim(),
+          no: document.getElementById("vfNo").value.trim(),
+          month: document.getElementById("vfMonth").value || ""
+        };
+        renderVouchers();
+      });
+
+      document.getElementById("vfResetBtn").addEventListener("click", function () {
+        var unit = findUnit(currentUnitId);
+        document.getElementById("vfUnit").value = unit ? unit.name : "";
+        document.getElementById("vfNo").value = "";
+        document.getElementById("vfMonth").value = "";
+        voucherFilter = { unit: unit ? unit.name : "" };
+        renderVouchers();
+      });
+
+      document.getElementById("btnAddScene").addEventListener("click", openAddModal);
+      document.getElementById("sceneDesc").addEventListener("input", function () {
+        updateDescCounter("sceneDesc", "sceneDescCount");
+      });
+      document.getElementById("editSceneDesc").addEventListener("input", function () {
+        updateDescCounter("editSceneDesc", "editSceneDescCount");
+      });
+      document.getElementById("modalCloseBtn").addEventListener("click", closeAddModal);
+      document.getElementById("modalCancelBtn").addEventListener("click", closeAddModal);
+      document.getElementById("modalConfirmBtn").addEventListener("click", confirmAddScene);
+      document.getElementById("addSceneModal").addEventListener("click", function (e) {
+        if (e.target === this) closeAddModal();
+      });
+
+      document.getElementById("editSceneCloseBtn").addEventListener("click", closeEditSceneModal);
+      document.getElementById("editSceneCancelBtn").addEventListener("click", closeEditSceneModal);
+      document.getElementById("editSceneConfirmBtn").addEventListener("click", confirmEditScene);
+      document.getElementById("editSceneModal").addEventListener("click", function (e) {
+        if (e.target === this) closeEditSceneModal();
+      });
+
+      document.getElementById("deleteSceneNoBtn").addEventListener("click", closeDeleteSceneModal);
+      document.getElementById("deleteSceneYesBtn").addEventListener("click", confirmDeleteScene);
+      document.getElementById("deleteSceneCloseBtn").addEventListener("click", closeDeleteSceneModal);
+      document.getElementById("deleteSceneModal").addEventListener("click", function (e) {
+        if (e.target === this) closeDeleteSceneModal();
+      });
+
+      document.getElementById("unitSearchBtn").addEventListener("click", function () {
+        renderUnitGrid(document.getElementById("unitSearchInput").value);
+      });
+      document.getElementById("unitResetBtn").addEventListener("click", function () {
+        document.getElementById("unitSearchInput").value = "";
+        renderUnitGrid("");
+      });
+      document.getElementById("unitSearchInput").addEventListener("keydown", function (e) {
+        if (e.key === "Enter") renderUnitGrid(this.value);
+      });
+
+      function getAuditUnitName() {
+        var unit = findUnit(AUDIT_UNIT_ID);
+        return unit ? unit.name : "";
+      }
+
+      function openLinkVoucherDrawer() {
+        lvUnitSelect.setDefault();
+        lvTypeSelect.refreshOptions();
+        document.getElementById("linkVoucherDrawer").classList.add("is-open");
+      }
+
+      function closeLinkVoucherDrawer() {
+        lvUnitSelect.close();
+        lvTypeSelect.close();
+        document.getElementById("linkVoucherDrawer").classList.remove("is-open");
+      }
+
+      var lvUnitSelect = {
+        value: "",
+
+        getOptions: function () {
+          return UNITS.map(function (u) { return u.name; });
+        },
+
+        refreshOptions: function () {
+          this.renderList("");
+        },
+
+        renderList: function (keyword) {
+          var list = document.getElementById("lvUnitList");
+          var options = this.getOptions();
+          var kw = (keyword || "").trim().toLowerCase();
+          var filtered = options.filter(function (name) {
+            return !kw || name.toLowerCase().indexOf(kw) !== -1;
+          });
+          list.innerHTML = "";
+          if (!filtered.length) {
+            var empty = document.createElement("li");
+            empty.className = "is-empty";
+            empty.textContent = "无匹配单位";
+            list.appendChild(empty);
+            return;
+          }
+          var self = this;
+          filtered.forEach(function (name) {
+            var li = document.createElement("li");
+            li.textContent = name;
+            if (name === self.value) li.classList.add("is-active");
+            li.addEventListener("mousedown", function (e) {
+              e.preventDefault();
+              self.setValue(name);
+              self.close();
+            });
+            list.appendChild(li);
+          });
+        },
+
+        setValue: function (val) {
+          this.value = val || "";
+          document.getElementById("lvUnit").value = this.value;
+          var label = document.getElementById("lvUnitLabel");
+          if (this.value) {
+            label.textContent = this.value;
+            label.classList.remove("is-placeholder");
+          } else {
+            label.textContent = "请选择 核算单位";
+            label.classList.add("is-placeholder");
+          }
+        },
+
+        setDefault: function () {
+          this.setValue(getAuditUnitName());
+          document.getElementById("lvUnitSearch").value = "";
+          this.renderList("");
+        },
+
+        clear: function () {
+          this.setValue("");
+          document.getElementById("lvUnitSearch").value = "";
+          this.renderList("");
+        },
+
+        open: function () {
+          document.getElementById("lvUnitSelect").classList.add("is-open");
+          this.refreshOptions();
+          var search = document.getElementById("lvUnitSearch");
+          search.value = "";
+          search.focus();
+        },
+
+        close: function () {
+          document.getElementById("lvUnitSelect").classList.remove("is-open");
+          document.getElementById("lvUnitSearch").value = "";
+        },
+
+        toggle: function () {
+          if (document.getElementById("lvUnitSelect").classList.contains("is-open")) {
+            this.close();
+          } else {
+            this.open();
+          }
+        }
+      };
+
+      document.getElementById("lvUnitTrigger").addEventListener("click", function (e) {
+        e.stopPropagation();
+        lvUnitSelect.toggle();
+      });
+
+      document.getElementById("lvUnitSearch").addEventListener("input", function () {
+        lvUnitSelect.renderList(this.value);
+      });
+
+      document.getElementById("lvUnitSearch").addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+
+      var lvTypeSelect = {
+        value: "",
+
+        getOptions: function () {
+          var scenes = unitScenes[AUDIT_UNIT_ID] || defaultScenes();
+          return scenes.map(function (s) { return s.name; });
+        },
+
+        refreshOptions: function () {
+          this.renderList("");
+        },
+
+        renderList: function (keyword) {
+          var list = document.getElementById("lvTypeList");
+          var options = this.getOptions();
+          var kw = (keyword || "").trim().toLowerCase();
+          var filtered = options.filter(function (name) {
+            return !kw || name.toLowerCase().indexOf(kw) !== -1;
+          });
+          list.innerHTML = "";
+          if (!filtered.length) {
+            var empty = document.createElement("li");
+            empty.className = "is-empty";
+            empty.textContent = "无匹配类型";
+            list.appendChild(empty);
+            return;
+          }
+          var self = this;
+          filtered.forEach(function (name) {
+            var li = document.createElement("li");
+            li.textContent = name;
+            if (name === self.value) li.classList.add("is-active");
+            li.addEventListener("mousedown", function (e) {
+              e.preventDefault();
+              self.setValue(name);
+              self.close();
+            });
+            list.appendChild(li);
+          });
+        },
+
+        setValue: function (val) {
+          this.value = val || "";
+          document.getElementById("lvType").value = this.value;
+          var label = document.getElementById("lvTypeLabel");
+          if (this.value) {
+            label.textContent = this.value;
+            label.classList.remove("is-placeholder");
+          } else {
+            label.textContent = "请选择 类型";
+            label.classList.add("is-placeholder");
+          }
+        },
+
+        clear: function () {
+          this.setValue("");
+          document.getElementById("lvTypeSearch").value = "";
+          this.renderList("");
+        },
+
+        open: function () {
+          document.getElementById("lvTypeSelect").classList.add("is-open");
+          this.refreshOptions();
+          var search = document.getElementById("lvTypeSearch");
+          search.value = "";
+          search.focus();
+        },
+
+        close: function () {
+          document.getElementById("lvTypeSelect").classList.remove("is-open");
+          document.getElementById("lvTypeSearch").value = "";
+        },
+
+        toggle: function () {
+          if (document.getElementById("lvTypeSelect").classList.contains("is-open")) {
+            this.close();
+          } else {
+            this.open();
+          }
+        }
+      };
+
+      document.getElementById("lvTypeTrigger").addEventListener("click", function (e) {
+        e.stopPropagation();
+        lvTypeSelect.toggle();
+      });
+
+      document.getElementById("lvTypeSearch").addEventListener("input", function () {
+        lvTypeSelect.renderList(this.value);
+      });
+
+      document.getElementById("lvTypeSearch").addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!document.getElementById("lvUnitSelect").contains(e.target)) {
+          lvUnitSelect.close();
+        }
+        if (!document.getElementById("lvTypeSelect").contains(e.target)) {
+          lvTypeSelect.close();
+        }
+      });
+
+      document.getElementById("btnLinkVoucher").addEventListener("click", function (e) {
+        e.stopPropagation();
+        openLinkVoucherDrawer();
+      });
+
+      document.getElementById("linkVoucherCloseBtn").addEventListener("click", closeLinkVoucherDrawer);
+      document.getElementById("linkVoucherCancelBtn").addEventListener("click", closeLinkVoucherDrawer);
+      document.getElementById("linkVoucherSaveBtn").addEventListener("click", function () {
+        closeLinkVoucherDrawer();
+      });
+      document.getElementById("linkVoucherDrawer").addEventListener("click", function (e) {
+        if (e.target === this) closeLinkVoucherDrawer();
+      });
+
+      document.getElementById("lvCheckAll").addEventListener("change", function () {
+        var checked = this.checked;
+        document.querySelectorAll(".lv-row-check").forEach(function (cb) {
+          cb.checked = checked;
+        });
+      });
+
+      document.getElementById("lvResetBtn").addEventListener("click", function () {
+        lvUnitSelect.setDefault();
+        document.getElementById("lvNo").value = "";
+        document.getElementById("lvMonth").value = "";
+        lvTypeSelect.clear();
+      });
+
+      document.getElementById("lvSearchBtn").addEventListener("click", function () {
+        /* 原型演示：筛选逻辑省略 */
+      });
+    })();
+  </script>
+</body>
+</html>
